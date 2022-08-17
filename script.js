@@ -39,4 +39,16 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+const itemReturn = async () => {
+  const products = await fetchProducts('computador');
+  const productsData = products.results;
+  productsData.forEach((element) => {
+    const items = document.querySelector('.items');
+    const item = createProductItemElement(
+      { sku: element.id, name: element.title, image: element.thumbnail },
+    );
+    items.appendChild(item);
+  });
+};
+
 window.onload = () => { };
