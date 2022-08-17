@@ -51,4 +51,6 @@ const itemReturn = async () => {
   });
 };
 
-window.onload = () => { };
+window.onload = () => {
+  itemReturn();
+};
