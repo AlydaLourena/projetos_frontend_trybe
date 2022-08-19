@@ -53,7 +53,6 @@ const itemReturn = async () => {
   const products = await fetchProducts('computador');
   const productsData = products.results;
   productsData.forEach((element) => {
-    // const items = document.querySelector('.items');
     const { id: sku, title: name, thumbnail: image } = element;
     const createItem = createProductItemElement({ sku, name, image });
     itemProduct.appendChild(createItem);
