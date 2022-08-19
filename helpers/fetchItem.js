@@ -1,7 +1,7 @@
 const fetchItem = ($ItemID) => {
   const fetchUrl = `https://api.mercadolibre.com/items/${$ItemID}`;
 
-  const response = await fetch(fetchUrl)
+  const response = fetch(fetchUrl)
     .then((result) => result.json())
     .then((data) => data);
 
