@@ -57,6 +57,12 @@ const itemReturn = async () => {
   });
 };
 
+  const emptyItems = document.getElementsByClassName('empty-cart')[0];
+  emptyItems.addEventListener('click', () => {
+    const carrinho = document.getElementsByClassName('cart__items')[0];
+    carrinho.innerHTML = '';
+  });
+
 window.onload = async () => {
  await itemReturn();
 };
