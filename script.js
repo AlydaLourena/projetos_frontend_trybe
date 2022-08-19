@@ -1,4 +1,3 @@
-// mudanca para o primeiro commit
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -13,14 +12,20 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const addCarItems = document.querySelector('.cart__items');
+const sectionItems = document.querySelector('.items');
+const itensCart = await fetchItem('$ItemID');
+
+  const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const botaoAdd = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  botaoAdd.addEventListener('click', () => createItemsCart(sku));
+  section.appendChild(botaoAdd);
 
   return section;
 };
@@ -28,7 +33,8 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  // Req. 5
+  event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -38,6 +44,12 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+
+async function createItemsCart() {
+  const carAddItem = createCartItemElement(itensCart);
+  addCarItems.appendChild(carAddItem);
+}
+
 
 const itemReturn = async () => {
   const products = await fetchProducts('computador');
@@ -51,6 +63,6 @@ const itemReturn = async () => {
   });
 };
 
-window.onload = () => {
-  itemReturn();
+window.onload = async () => {
+ await itemReturn();
 };
