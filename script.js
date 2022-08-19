@@ -11,6 +11,17 @@ const createCustomElement = (element, className, innerText) => {
   e.innerText = innerText;
   return e;
 };
+
+// Função Carregando do Req. 11
+const loading = () => {
+  const cartSection = document.querySelector('.cart');
+  const spanLoading = document.createElement('span');
+  spanLoading.className = 'loading';
+  spanLoading.innerHTML = 'loading...';
+  cartSection.appendChild(spanLoading);
+  cartSection.removeChild(spanLoading);
+};
+
 const cartItemClickListener = (event) => {
   // Req. 5
   event.target.remove();
