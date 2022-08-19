@@ -1,3 +1,5 @@
+const itemProduct = document.querySelector('.items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -10,16 +12,6 @@ const createCustomElement = (element, className, innerText) => {
   e.className = className;
   e.innerText = innerText;
   return e;
-};
-
-// Função Carregando do Req. 11
-const loading = () => {
-  const cartSection = document.querySelector('.cart');
-  const spanLoading = document.createElement('span');
-  spanLoading.className = 'loading';
-  spanLoading.innerHTML = 'loading...';
-  cartSection.appendChild(spanLoading);
-  cartSection.removeChild(spanLoading);
 };
 
 const cartItemClickListener = (event) => {
@@ -61,11 +53,19 @@ const itemReturn = async () => {
   const products = await fetchProducts('computador');
   const productsData = products.results;
   productsData.forEach((element) => {
-    const items = document.querySelector('.items');
+    // const items = document.querySelector('.items');
     const { id: sku, title: name, thumbnail: image } = element;
-    const item = createProductItemElement({ sku, name, image });
-    items.appendChild(item);
+    const createItem = createProductItemElement({ sku, name, image });
+    itemProduct.appendChild(createItem);
   });
+};
+
+// Função Carregando do Req. 11
+const loading = () => {
+  const spanLoading = document.createElement('p');
+  spanLoading.className = 'loading';
+  spanLoading.innerHTML = 'loading...';
+  itemProduct.appendChild(spanLoading);
 };
 
   const emptyItems = document.getElementsByClassName('empty-cart')[0];
@@ -75,5 +75,8 @@ const itemReturn = async () => {
   });
 
 window.onload = async () => {
+ loading();
  await itemReturn();
+ const removeLoading = document.querySelector('.loading');
+  itemProduct.removeChild(removeLoading);
 };
