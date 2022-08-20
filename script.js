@@ -67,6 +67,16 @@ const loading = () => {
   itemProduct.appendChild(spanLoading);
 };
 
+  // Req. 9 Função responsável por somar todos os
+  // preços dos produtos adicionados no carrinho de compras.
+async function sumItems(li) {
+  const total = document.querySelector('.total-price');
+  const itemPrice = parseFloat(li.innerText.split('$')[1]);
+  const totalPrice = parseFloat(total.innerHTML);
+  const sum = itemPrice + totalPrice;
+  total.innerText = sum;
+}
+
   const emptyItems = document.getElementsByClassName('empty-cart')[0];
   emptyItems.addEventListener('click', () => {
     const carrinho = document.getElementsByClassName('cart__items')[0];
