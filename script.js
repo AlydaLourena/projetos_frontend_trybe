@@ -1,4 +1,5 @@
 const itemProduct = document.querySelector('.items');
+const CartProducts = '.cart__items';
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -17,6 +18,9 @@ const createCustomElement = (element, className, innerText) => {
 const cartItemClickListener = (event) => {
   // Req. 5
   event.target.remove();
+  const cartProd = document.querySelector(CartProducts);
+  const itemsProd = cartProd.innerHTML;
+  saveCartItems();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -56,9 +60,21 @@ const itemReturn = async () => {
     const { id: sku, title: name, thumbnail: image } = element;
     const createItem = createProductItemElement({ sku, name, image });
     itemProduct.appendChild(createItem);
+    const itemsProd = itemProduct.innerHTML;
+    saveCartItems(itemsProd);
   });
 };
 
+const cartItensList = () => {
+  const listSave = getSavedCartItems('cartItems');
+  const itemsProd = document.querySelector(CartProducts);
+  itemsProd.innerHTML = listSave.trim();
+
+  const cartItem = document.querySelectorAll('.cart__item');
+  cartItem.forEach((element) => {
+    element.addEventListener('click', cartItemClickListener);
+  });
+};
 // Função Carregando do Req. 11
 const loading = () => {
   const spanLoading = document.createElement('p');
@@ -66,16 +82,6 @@ const loading = () => {
   spanLoading.innerHTML = 'loading...';
   itemProduct.appendChild(spanLoading);
 };
-
-  // Req. 9 Função responsável por somar todos os
-  // preços dos produtos adicionados no carrinho de compras.
-async function sumItems(li) {
-  const total = document.querySelector('.total-price');
-  const itemPrice = parseFloat(li.innerText.split('$')[1]);
-  const totalPrice = parseFloat(total.innerHTML);
-  const sum = itemPrice + totalPrice;
-  total.innerText = sum;
-}
 
   const emptyItems = document.getElementsByClassName('empty-cart')[0];
   emptyItems.addEventListener('click', () => {
@@ -86,6 +92,7 @@ async function sumItems(li) {
 window.onload = async () => {
  loading();
  await itemReturn();
+ cartItensList();
  const removeLoading = document.querySelector('.loading');
   itemProduct.removeChild(removeLoading);
 };
